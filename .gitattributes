@@ -26,8 +26,6 @@
 # Apply override to all files in the directory
 *.md linguist-detectable
 
-
-
 # Language attributes for RISC OS files:
 *,102 text diff=perl gitlab-language=perl linguist-language=perl linguist-detectable=true
 *,a73 text diff=python gitlab-language=python linguist-language=python linguist-detectable=true
