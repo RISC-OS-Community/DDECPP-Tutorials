@@ -10,7 +10,7 @@ Git clone this repository in a way that can be reached by your RISC OS system, i
 
 Then, from your RISC OS system, double click on the file called MkDDE or have a look at the sources in the subdirectory names `c++`.
 
-For a full description of how the code works have a look at this video [here](https://www.youtube.com/watch?v=3U37_xn6MpM&t=144s)
+For a full description of how the code works have a look at this video [here](https://www.youtube.com/watch?v=bK-Na5LBWtY)
 
 Enjoy!
 
