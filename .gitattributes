@@ -1,58 +1,49 @@
 # THIS IS ONLY FOR THE gitattributes REPOSITORY.
 # Handle line endings automatically for files detected as text
 # and leave all files detected as binary untouched.
-*               text=auto
+#*               text=auto
 
 #
 # The above will handle all files NOT found below
 #
 # These files are text and should be normalized (Convert crlf => lf)
-*.gitattributes text
-.gitignore      text
-*.md            text diff=markdown
-
-#
-# Exclude files from exporting
-#
-
-.gitattributes  export-ignore
-.gitignore      export-ignore
-
-#
-# Enable syntax highlighting for files with `.gitattributes` extensions.
-#
-*.gitattributes linguist-language=gitattributes
-
-# Apply override to all files in the directory
-*.md linguist-detectable
+*.gitattributes text linguist-language=gitattributes export-ignore
+.gitignore      text export-ignore
+*.md            text diff=markdown linguist-detectable
+*.txt           text diff=text linguist-detectable
 
 # Language attributes for RISC OS files:
-*,102 text diff=perl gitlab-language=perl linguist-language=perl linguist-detectable=true
-*,a73 text diff=python gitlab-language=python linguist-language=python linguist-detectable=true
-*,a74 text diff=python gitlab-language=python linguist-language=python linguist-detectable=true
-*,a75 text diff=python gitlab-language=python linguist-language=python linguist-detectable=true
-*,18c text diff=lua gitlab-language=lua linguist-language=lua linguist-detectable=true
-*,fe1 text diff=makefile gitlab-language=make linguist-language=makefile linguist-detectable=true
-*,fff text diff=text gitlab-language=text linguist-language=text linguist-detectable=true
-*,ffb text diff=bbcbasic gitlab-language=bbcbasic linguist-language=bbcbasic linguist-detectable=true
-*,fd1 text diff=bbcbasic gitlab-language=bbcbasic linguist-language=bbcbasic linguist-detectable=true
+*.pdf	       -text
 
-src/**/c/** text diff=c gitlab-language=c linguist-language=c linguist-detectable=true
-src/**/h/** text diff=c gitlab-language=c linguist-language=c linguist-detectable=true
-src/**/c++/** text diff=cpp gitlab-language=cpp linguist-language=cpp linguist-detectable=true
-src/**/cpp/** text diff=cpp gitlab-language=cpp linguist-language=cpp linguist-detectable=true
-src/**/bas/** text diff=bbcbasic gitlab-language=bbcbasic linguist-language=bbcbasic linguist-detectable=true
-src/**/s/** text diff=armasm gitlab-language=armasm linguist-language=assembly linguist-detectable=true
-src/**/Hdr/** text diff=armasm gitlab-language=armasm linguist-language=assembly linguist-detectable=true
-src/**/fth/** text diff=forth gitlab-language=forth linguist-language=forth linguist-detectable=true
-src/**/p/** text diff=prolog gitlab-language=prolog linguist-language=prolog linguist-detectable=true
-tests/**/c/** text diff=c gitlab-language=c linguist-language=c linguist-detectable=true
-tests/**/h/** text diff=c gitlab-language=c linguist-language=c linguist-detectable=true
-tests/**/c++/** text diff=cpp gitlab-language=cpp linguist-language=cpp linguist-detectable=true
-tests/**/cpp/** text diff=cpp gitlab-language=cpp linguist-language=cpp linguist-detectable=true
-tests/**/bas/** text diff=bbcbasic gitlab-language=bbcbasic linguist-language=bbcbasic linguist-detectable=true
-tests/**/Hdr/** text diff=armasm gitlab-language=armasm linguist-language=assembly linguist-detectable=true
-tests/**/s/** text diff=armasm gitlab-language=armasm linguist-language=assembly linguist-detectable=true
-tests/**/fth/** text diff=forth gitlab-language=forth linguist-language=forth linguist-detectable=true
-tests/**/p/** text diff=prolog gitlab-language=prolog linguist-language=prolog linguist-detectable=true
-VersionNum gitlab-language=c linguist-language=c
+doc/**         linguist-documentation=true
+
+*,102          text diff=perl linguist-language=perl
+*,a73          text diff=python linguist-language=python
+*,a74          text diff=python linguist-language=python 
+*,a75          text diff=python linguist-language=python
+*,18c          text diff=lua linguist-language=lua
+*,fe1          text diff=makefile linguist-language=makefile
+*,fff          text diff=text linguist-language=text
+*,ffb          text diff=bbcbasic linguist-language=bbcbasic 
+*,fd1          text diff=bbcbasic linguist-language=bbcbasic
+
+src/**/c/*     text diff=c linguist-language=c
+src/**/h/*     text diff=c linguist-language=c
+src/**/c++/*   text diff=cpp linguist-language=cpp
+src/**/cpp/*   text diff=cpp linguist-language=cpp 
+src/**/bas/*   text diff=bbcbasic  linguist-language=bbcbasic
+src/**/s/*     text diff=armasm linguist-language=armasm
+src/**/Hdr/*   text diff=armasm linguist-language=armasm
+src/**/fth/*   text diff=forth linguist-language=forth
+src/**/p/*     text diff=prolog linguist-language=prolog
+tests/**/c/*   text diff=c linguist-language=c
+tests/**/h/*   text diff=c linguist-language=c
+tests/**/c++/* text diff=cpp linguist-language=cpp
+tests/**/cpp/* text diff=cpp linguist-language=cpp
+tests/**/bas/* text diff=bbcbasic linguist-language=bbcbasic
+tests/**/Hdr/* text diff=armasm linguist-language=armasm
+tests/**/s/*   text diff=armasm linguist-language=armasm
+tests/**/fth/* text diff=forth linguist-language=forth
+tests/**/p/*   text diff=prolog linguist-language=prolog
+
+VersionNum     linguist-language=c gitlab-language=c
