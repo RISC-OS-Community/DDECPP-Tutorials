@@ -1,0 +1,136 @@
+// Implementation of FlashCapsLock as a Singleton Class
+// in RISC OS Open DDE C++ (CFront)
+//
+//  Author: Paolo Fabio Zaino
+// License: Copyright by Paolo Fabio Zaino, all rights reserved
+//          distributed under CDDL v1.1
+
+#include <iostream.h>
+
+#include <time.h>
+#include <swis.h>
+
+// Singleton Calss to handle CapsLock state
+class CapsSingleton {
+	private:
+		// This member variable holds the Object's state
+		int state;
+
+		// Static pointer which will points
+		// to the instance of this class
+		static CapsSingleton* instancePtr;
+
+		// Default constructor
+		CapsSingleton()
+		{
+			state = 1;
+		}
+
+	public:
+		static CapsSingleton* getInstance()
+		{
+			// If there is no instance of CapsSingleton
+			// then we can create an instance.
+			if (instancePtr == NULL)
+			{
+				instancePtr = new CapsSingleton();
+
+				// return the instance pointer
+				return instancePtr;
+			} else {
+				// if instancePtr != NULL that means
+				// that CapsSingleton already has an
+				// instance, so, we just return that
+				// instance pointer:
+				return instancePtr;
+			}
+		}
+
+		// Prints the state of the object:
+		void print()
+		{
+			if (state == 1) {
+				cout << "tick" << endl;
+			} else {
+				cout << "tock" << endl;
+			}
+		}
+
+		// Toggles the state of CapsLock and the object:
+		void toggle()
+		{
+			// Call OS_Byte service 202 and EOR CapsLock bit
+			_swix(OS_Byte, _INR(0,2), 202, 1<<4, 255);
+
+			// Update LED state to reflect previous _swix
+			_swix(OS_Byte, _IN(0), 118);
+
+			// Toggle class state:
+			state = -state;
+		}
+
+		// Returns the state of the object:
+		int getState()
+		{
+			return state;
+		}
+};
+
+// Initializing instancePtr with NULL
+CapsSingleton* CapsSingleton::instancePtr = NULL;
+
+/*************************
+ * Main program
+ *************************/
+int main()
+{
+	// Let's create CapsLock1:
+	cout << "First Singleton: CapsLock1" << endl;
+
+	CapsSingleton* MyCapsLock1
+			= CapsSingleton::getInstance();
+
+	// Let's check if MyCapsLock1 is working ok:
+	MyCapsLock1->print();
+	MyCapsLock1->toggle();
+
+	// Let's display MyCapsLock1 info:
+	cout << "Address of MyCapsLock1: " <<
+			MyCapsLock1 << endl;
+	cout << endl;
+
+	// Let's create MyCapsLock2:
+	cout << "Second Singleton MyCapsLock2:" << endl;
+
+	CapsSingleton* MyCapsLock2
+			= CapsSingleton::getInstance();
+
+	// Let's check if MyCapsLock2 is working ok:
+	MyCapsLock2->print();
+	MyCapsLock2->toggle();
+
+	// Let's display MyCapsLock2 info:
+	cout << "Address of MyCapsLock2: " << MyCapsLock2 << endl;
+	cout << endl;
+
+	// Let's start the infinite loop
+	while (1)
+	{
+		if (MyCapsLock1->getState() == 1)
+		{
+			MyCapsLock1->print();
+			MyCapsLock1->toggle();
+		} else {
+			MyCapsLock2->print();
+			MyCapsLock2->toggle();
+		}
+		clock_t startTime = clock();
+		while (clock() - startTime < CLOCKS_PER_SEC)
+		{
+			// Here we wait
+		}
+	}
+
+	return 0;
+}
+
