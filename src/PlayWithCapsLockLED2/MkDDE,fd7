@@ -1,0 +1,3 @@
+Dir <Obey$Dir>
+WimpSlot -min 4096k
+amu all THROWBACK=-throwback

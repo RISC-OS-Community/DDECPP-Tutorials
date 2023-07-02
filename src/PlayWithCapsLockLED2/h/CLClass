@@ -1,0 +1,30 @@
+#ifndef __cplusplus
+#error Header file CLClass.h may only be used from C++
+#endif
+#pragma force_top_level
+#pragma include_only_once
+
+#ifndef CLCLASS_H
+#define CLCLASS_H
+
+// Singleton Calss to handle CapsLock state
+class CapsSingleton {
+  private:
+    // This member variable holds the Object's state
+    int state;
+
+    // Static pointer which will points
+    // to the instance of this class
+    static CapsSingleton* instancePtr;
+
+    // Default constructor
+    CapsSingleton(void);
+
+  public:
+    static CapsSingleton* getInstance(void);
+    virtual void print(void);
+    void toggle(void);
+    int getState(void);
+};
+
+#endif

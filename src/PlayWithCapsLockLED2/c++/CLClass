@@ -1,0 +1,67 @@
+// Implementation of FlashCapsLock as a Singleton Class
+// in RISC OS Open DDE C++ (CFront)
+//
+//  Author: Paolo Fabio Zaino
+// License: Copyright by Paolo Fabio Zaino, all rights reserved
+//          distributed under CDDL v1.1
+#include <iostream.h>
+#include <swis.h>
+#include "CLClass.h"
+
+
+// Default constructor
+CapsSingleton::CapsSingleton(void)
+{
+	state = 1;
+}
+
+CapsSingleton* CapsSingleton::getInstance(void)
+{
+	// If there is no instance of CapsSingleton
+	// then we can create an instance.
+	if (instancePtr == NULL)
+	{
+		instancePtr = new CapsSingleton();
+
+		// return the instance pointer
+		return instancePtr;
+	} else {
+		// if instancePtr != NULL that means
+		// that CapsSingleton already has an
+		// instance, so, we just return that
+		// instance pointer:
+		return instancePtr;
+	}
+}
+
+// Prints the state of the object:
+void CapsSingleton::print(void)
+{
+	if (state == 1) {
+		cout << "tick" << endl;
+	} else {
+		cout << "tock" << endl;
+	}
+}
+
+// Toggles the state of CapsLock and the object:
+void CapsSingleton::toggle(void)
+{
+	// Call OS_Byte service 202 and EOR CapsLock bit
+	_swix(OS_Byte, _INR(0,2), 202, 1<<4, 255);
+
+	// Update LED state to reflect previous _swix
+	_swix(OS_Byte, _IN(0), 118);
+
+	// Toggle class state:
+	state = -state;
+}
+
+// Returns the state of the object:
+int CapsSingleton::getState(void)
+{
+	return state;
+}
+
+// Initializing instancePtr with NULL
+CapsSingleton* CapsSingleton::instancePtr = NULL;
