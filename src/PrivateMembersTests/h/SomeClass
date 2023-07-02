@@ -1,0 +1,36 @@
+#ifndef __cplusplus
+#error Header file SomeClass.h may only be used from C++
+#endif
+#pragma force_top_level
+
+#ifndef SOMECLASS_H
+#define SOMECLASS_H
+
+// SomeClass declaration, just an example class...
+class SomeClass {
+  private:
+    // List of private member variables to use with DDT
+    int index;
+
+    char *message;
+    int msg_len;
+
+    int status;
+
+  public:
+    // List of public methods
+      SomeClass(void);
+    ~ SomeClass(void);
+
+    void print_values(void);
+
+    void print_addr(void);
+
+    void inc_index(void);
+
+    void change_message(char const * const str);
+
+    void change_status(int new_status);
+};
+
+#endif

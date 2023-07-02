@@ -1,0 +1,90 @@
+// Implementation of SomeClass
+// in RISC OS Open DDE C++ (CFront)
+//
+//  Author: Paolo Fabio Zaino
+// License: Copyright by Paolo Fabio Zaino, all rights reserved
+//          distributed under CDDL v1.1
+
+#include <iostream.h>
+#include <stdlib.h>
+#include <string.h>
+
+// Include SomeClass declarartion header:
+#include "SomeClass.h"
+
+// Constructor
+SomeClass::SomeClass()
+{
+   index = 1;
+
+   msg_len = 13;
+   message = malloc(sizeof(char) * msg_len);
+   change_message("Hello World!\0");
+
+   status = 0;
+}
+
+// Destructor
+SomeClass::~ SomeClass()
+{
+  // Reset index and status to showcase DDT Watchpoints:
+  index = 0;
+  status = 0;
+
+  // C++ RAII
+  free(message);
+  message = NULL;
+}
+
+
+// Display Private member variables' values:
+void SomeClass::print_values(void)
+{
+  cout << "         Index: " << index << endl;
+  cout << "       Message: " << message << endl;
+  cout << "Message Length: " << msg_len << endl;
+  cout << "        Status: " << status << endl;
+}
+
+// Display Private memrber variables' addresses:
+void SomeClass::print_addr(void)
+{
+  cout << "         Index: " << &index << endl;
+  cout << "       Message: " << &message << endl;
+  cout << "Message Length: " << &msg_len << endl;
+  cout << "        Status: " << &status << endl;
+}
+
+// Increment index
+void SomeClass::inc_index(void)
+{
+  index++;
+}
+
+// Change message stored in *message
+void SomeClass::change_message(char const * const str)
+{
+  // Check if the new string is larger than the default (or actual)
+  // buffer, and, if it is, increase the buffer size appropriately
+  if ( strlen(str) > msg_len ) {
+    msg_len = strlen(str);
+    message = (char *)realloc(message, sizeof(char) * msg_len);
+  }
+
+  // Copy str in message in a safe manner:
+  strncpy(message, str, msg_len);
+
+  // Even if we should be copy a NULL terminator, ensure that
+  // We ALWAYS have a NULL terminator at the end of message:
+  char *msg_end = message + msg_len;
+  *msg_end = '\0';
+}
+
+// Change status
+void SomeClass::change_status(int new_status)
+{
+  // Change the status only if new_status is NOT negative:
+  if ( new_status > -1 ) {
+    status = new_status;
+  }
+}

@@ -1,0 +1,52 @@
+// Implementation of main for SomeClass example
+// in RISC OS Open DDE C++ (CFront)
+//
+//  Author: Paolo Fabio Zaino
+// License: Copyright by Paolo Fabio Zaino, all rights reserved
+//          distributed under CDDL v1.1
+
+#include <iostream.h>
+
+// Include SOmeClass declaration header:
+#include "SomeClass.h"
+
+// Do something :)
+void some_function(int test)
+{
+  cout << "Creating an instance of SomeClass..." << endl;
+
+  // Let's create SomeObject
+  SomeClass SomeObject;
+
+  // if test is equal to 2 let's later the Object's state:
+  if (test == 2) {
+    SomeObject.inc_index();
+    SomeObject.change_message("This is a different and much longer message.\0");
+    SomeObject.change_status(32);
+    SomeObject.change_status(-129);
+  }
+
+  // Let's print SomeObject State:
+  SomeObject.print_values();
+
+  // Let's print the addresses of SomeObject's private variables:
+  SomeObject.print_addr();
+
+}
+
+/*************************
+ * Main program
+ *************************/
+int main()
+{
+  /* Let's call some_function to create SomeObject
+     in a different block:
+  */
+  some_function(1);
+
+  // Now let's create some other object:
+  some_function(2);
+
+  // We're done, let's quit and return to the OS
+  return 0;
+}
